@@ -1,5 +1,7 @@
 \beamer@sectionintoc {1}{Overview}{2}{0}{1}
-\beamer@sectionintoc {2}{Crypto}{6}{0}{2}
-\beamer@sectionintoc {3}{Transaction}{12}{0}{3}
-\beamer@sectionintoc {4}{BlockChain}{13}{0}{4}
-\beamer@sectionintoc {5}{Mining}{17}{0}{5}
+\beamer@sectionintoc {2}{P2P Network}{23}{0}{2}
+\beamer@sectionintoc {3}{Crypto}{26}{0}{3}
+\beamer@sectionintoc {4}{Transaction}{33}{0}{4}
+\beamer@sectionintoc {5}{BlockChain}{41}{0}{5}
+\beamer@sectionintoc {6}{Mining}{46}{0}{6}
+\beamer@sectionintoc {7}{Conclusion}{61}{0}{7}

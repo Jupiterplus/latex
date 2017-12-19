@@ -1,30 +1,29 @@
-\frametitle{Hash Function Example}
+\frametitle{Difficulty Target and Re-Target}
+    Every 2016 blocks, all node re-target the Proof-of-Work difficulty.
     \begin{lstlisting}[language=Python]
-    SHA224("")
-    0x d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f
-    SHA256("")
-    0x e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
-    \end{lstlisting}
+New Difficulty = Old Difficulty * (20160 minutes / Actual Time of Last 2016 Blocks)
+The Target = The maximum target / current difficulty.
+The maximum target is:
+    0x00000000FFFF0000000000000000000000000000000000000000000000000000 \end{lstlisting}
 
-    Even a small change in the message wil result in a mostly different hash.
-    \begin{lstlisting}[language=Python]
-    SHA224("The quick brown fox jumps over the lazy dog")
-    0x 730e109bd7a8a32b1cb9d9a09aa2325d2430587ddbc0c38bad911525
-    SHA224("The quick brown fox jumps over the lazy dog.")
-    0x 619cba8e8e05826e9b8c519c0a5c68f4fb653e8a3d8aa04bb2c8cd4c
-    \end{lstlisting}
+    Re-Target Code in bitcoind
+    \begin{lstlisting}[language=C++]
+    // Limit adjustment step
+    int64_t nActualTimespan = pindexLast->GetBlockTime() - nFirstBlockTime;
+    LogPrintf("  nActualTimespan = %d  before bounds\n", nActualTimespan);
+    if (nActualTimespan < params.nPowTargetTimespan/4)
+        nActualTimespan = params.nPowTargetTimespan/4;
+    if (nActualTimespan > params.nPowTargetTimespan*4)
+        nActualTimespan = params.nPowTargetTimespan*4;
 
-    Proof of work first sight:
+    // Retarget
+    const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
+    arith_uint256 bnNew;
+    arith_uint256 bnOld;
+    bnNew.SetCompact(pindexLast->nBits);
+    bnOld = bnNew;
+    bnNew *= nActualTimespan;
+    bnNew /= params.nPowTargetTimespan;
 
-    Given a basic string \alert{hello world!} + random number \alert{nonce}
-
-    We need the digest have 4 leading 0.
-    \begin{lstlisting}[language=Python]
-    "Hello, world!0" => 1312af178c253f84028d480a6adc1e25e81caa44c749ec81976192e2ec934c64
-    "Hello, world!1" => e9afc424b79e4f6ab42d99c81156d3a17228d6e1eef4139be78e948a9332a7d8
-    "Hello, world!2" => ae37343a357a8297591625e7134cbea22f5928be8ca2a32aa475cf05fd4266b7
-    ...
-    "Hello, world!4248" => 6e110d98b388e77e9c6f042ac6b497cec46660deef75a55ebc7cfdf65cc0b965
-    "Hello, world!4249" => c004190b822f1669cac8dc37e761cb73652e7832fb814565702245cf26ebb9e6
-    "Hello, world!4250" => 0000c3af42fc31103f1fdc0151fa747ff87349a4714df7cc52ea464e12dcd4e9
-    \end{lstlisting}
+    if (bnNew > bnPowLimit)
+        bnNew = bnPowLimit; \end{lstlisting}
