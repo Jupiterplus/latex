@@ -1,0 +1,60 @@
+\section{Consensus}
+
+\begin{frame}
+    \frametitle{What is Consensus?}
+    \begin{itemize}
+        \item Agreememt on shared state(single system image)
+        \item Recovers from server failure autonomously
+            \begin{itemize}
+                \item Minority of servers fail: no problem
+                \item Majority fail: lose availability, retain consistency
+            \end{itemize}
+        \begin{figure}
+            \centering
+            \includegraphics[scale=0.3]{concensus.png}
+        \end{figure}
+        \item Key to building consistent storage systems.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{To eliminate single point of failure: Replication}
+    \begin{itemize}
+        \item Network partition or server down
+        \item Consensus
+            \begin{itemize}
+                \item Allows collection of machines to work as coherent group
+                \item Continuous service, even if some machines fail
+            \end{itemize}
+        \item A concensus algorithm(built-in or library)
+            \begin{itemize}
+                \item Paxos(1990) has dominated discussion for 25 years, hard for engineer.
+                \item Raft(2013) is easier to understand.
+                \item \ldots
+            \end{itemize}
+        \item A concensus service
+            \begin{itemize}
+                \item Google Chubby
+                \item Apache ZooKeeper
+                \item \ldots
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Replicated State Machine(RSM)}
+    \begin{figure}
+       \centering
+        \includegraphics[scale=0.3]{rsm.png}
+    \end{figure}
+
+    \begin{itemize}
+        \item Replicated log => \alert{All servers execute same commands in same order}.
+        \item Consensus module ensures proper log replication.
+        \item System makes progress as long as any majority of servers are up.
+        \item Failure model: fail-stop(not Byzantine), delayed/lost messages.
+    \end{itemize}
+\end{frame}
+
+\input{raft}
+%\input{paxos}

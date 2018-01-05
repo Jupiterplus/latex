@@ -1,5 +1,0 @@
-\beamer@sectionintoc {1}{Overview}{2}{0}{1}
-\beamer@sectionintoc {2}{Crypto}{2}{0}{2}
-\beamer@sectionintoc {3}{Transaction}{10}{0}{3}
-\beamer@sectionintoc {4}{Bitcoin Network}{11}{0}{4}
-\beamer@sectionintoc {5}{BlockChain}{11}{0}{5}
