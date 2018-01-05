@@ -6,7 +6,6 @@
 # rendering quality set to theoretical limits and that all fonts should be
 # embedded. While typically overkill, the detriment to doing so is negligible.
 PROJECT = bitcoin
-MAIN_FILE = src/bitcoin.tex
 
 # Targets:
 #    default : compiles the document to a PDF file using the defined

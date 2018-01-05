@@ -1,0 +1,199 @@
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+I don't understand why the blockchain is so important. Isn't the
+requirement for the owner's signature on each transaction enough to
+prevent bitcoins from being stolen?
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+I don't understand why the blockchain is so important. Isn't the
+requirement for the owner's signature on each transaction enough to
+prevent bitcoins from being stolen?
+    \end{block}
+
+    \begin{block}{Answer}
+The signature is not enough, because it doesn't prevent the owner
+from spending money twice: signing two transactions that transfer the
+same bitcoin to different recipients. The blockchain acts as a
+publishing system to try to ensure that once a bitcoin has been spent
+once, lots of participants will know, and will be able to reject a
+second spend.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Why does Bitcoin need to define a new currency? Wouldn't it be more
+convenient to use an existing currency like dollars?
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Why does Bitcoin need to define a new currency? Wouldn't it be more
+convenient to use an existing currency like dollars?
+    \end{block}
+
+    \begin{block}{Answer}
+The new currency (Bitcoins) allows the system to reward miners with
+freshly created money; this would be harder with dollars because it's
+illegal for ordinary people to create fresh dollars. And using dollars
+would require a separate settlement system: if I used the blockchain
+to record a payment to someone, I still need to send the recipient
+dollars via a bank transfer or physical cash.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Why is the purpose of proof-of-work?
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Why is the purpose of proof-of-work?
+    \end{block}
+
+    \begin{block}{Answer}
+It makes it hard for an attacker to convince the system to switch
+to a blockchain fork in which a coin is spent in a different way than
+in the main fork. You can view proof-of-work as making a random choice
+over the participating CPUs of who gets to choose which fork to
+extend. If the attacker controls only a few CPUs, the attacker won't
+be able to work hard enough to extend a new malicious fork fast enough
+to overtake the main blockchain.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Could a Bitcoin-like system use something less wasteful than
+proof-of-work?
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Could a Bitcoin-like system use something less wasteful than
+proof-of-work?
+    \end{block}
+
+    \begin{block}{Answer}
+Proof-of-work is hard to fake or simulate, a nice property in a
+totally open system like Bitcoin where you cannot trust anyone to
+follow rules. There are some alternate schemes; search the web for
+proof-of-stake, for example. In a smallish closed system, in which the
+participants are known though not entirely trusted, Byzantine
+agreement protocols could be used, as in Hyperledger.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Can Alice spend the same coin twice by sending "pay Bob" and "pay
+Charlie" to different subsets of miners?
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Q \& A}
+    \begin{block}{Question}
+Can Alice spend the same coin twice by sending "pay Bob" and "pay
+Charlie" to different subsets of miners?
+    \end{block}
+
+    \begin{block}{Answer}
+The most likely scenario is that one subset of miners finds the
+nonce for a new block first. Let's assume the first block to be found
+is B50 and it contains "pay Bob". This block will be flooded to all
+miners, so the miners working on "pay Charlie" will switch to mining a
+successor block to B50. These miners validate transactions they place
+in blocks, so they will notice that the "pay Charlie" coin was spent in
+B50, and they will ignore the "pay Charlie" transaction. Thus, in this
+scenario, double-spend won't work.
+
+There's a small chance that two miners find blocks at the same time,
+perhaps B50' containing "pay Bob" and B50'' containing "pay Charlie". At
+this point there's a fork in the block chain. These two blocks will be
+flooded to all the nodes. Each node will start mining a successor to one
+of them (the first it hears). Again the most likely outcome is that a
+single miner will finish significantly before any other miner, and flood
+the successor, and most peers will switch that winning fork. The chance
+of repeatedly having two miners simultaneously find blocks gets very
+small as the forks get longer. So eventually all the peers will switch
+to the same fork, and in fork there will be only one spend of the coin.
+
+The possibility of accidentally having a short-lived fork is the reason
+that careful clients will wait until there are a few successor blocks
+before believing a transaction.
+    \end{block}
+\end{frame}
+
+\begin{frame}
+Q: It takes an average of 10 minutes for a Bitcoin block to be
+validated. Does this mean that the parties involved aren't sure if the
+transaction really happened until 10 minutes later?
+ 
+A: The 10 minutes is awkward. But it's not always a problem. For
+example, suppose you buy a toaster oven with Bitcoin from a web site.
+The web site can check that the transaction is known by a few servers,
+though not yet in a block, and show you a "purchase completed" page.
+Before shipping it to you, they should check that the transaction is
+in a block. For low-value in-person transactions, such as buying a cup
+of coffee, it's probably enough for the seller to ask a few peers to
+check that the bitcoins haven't already been spent (i.e. it's
+reasonably safe to not bother waiting for the transaction to appear in
+the blockchain at all).
+\end{frame}
+
+\begin{frame}
+Q: What can be done to speed up transactions on the blockchain?
+ 
+A: I think the constraint here is that 10 minutes needs to be much
+larger (i.e. >= 10x) than the time to broadcast a newly found block to
+all peers. The point of that is to minimize the chances of two peers
+finding new blocks at about the same time, before hearing about the
+other peer's block. Two new blocks at the same time is a fork; forks
+are bad since they cause disagreement about which transactions are
+real, and they waste miners' time. Since blocks can be pretty big (up
+to a megabyte), and peers could have slow Internet links, and the
+diameter of the peer network might be large, it could easily take a
+minute to flood a new block. If one could reduce the flooding time,
+then the 10 minutes could also be reduced.
+\end{frame}
+
+\begin{frame}
+Q: The entire blockchain needs to be downloaded before a node can
+participate in the network. Won't that take an impractically long time
+as the blockchain grows?
+
+A: It's true that it takes a while for a new node to get all the
+transactions. But once a given server has done this work, it can save
+the block chain, and doesn't need to fetch it again. It only needs to
+know about new blocks, which is not a huge burden. I think most
+ordinary users of Bitcoin won't run full Bitcoin nodes; instead they
+will one way or another trust some full nodes.
+\end{frame}
+
+\begin{frame}
+Q: Is it feasible for an attacker to gain a majority of the computing
+power among peers?
+
+A: It may be feasible; some people think that big cooperative groups
+of miners have been close to a majority at times:
+http://www.coindesk.com/51-attacks-real-threat-bitcoin/
+\end{frame}
+
+
