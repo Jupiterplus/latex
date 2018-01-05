@@ -1,21 +1,21 @@
 % Based on the "infolines" outer theme.
 
-\newif\ifbeamer@UMONS@navigation
-\beamer@UMONS@navigationfalse
+\newif\ifbeamer@COSMOS@navigation
+\beamer@COSMOS@navigationfalse
 
 \DeclareOptionBeamer{navigation}[true]{%
-  \csname beamer@UMONS@navigation#1\endcsname}
+  \csname beamer@COSMOS@navigation#1\endcsname}
 
-\newif\ifbeamer@UMONS@nosubsection
-\beamer@UMONS@nosubsectionfalse
+\newif\ifbeamer@COSMOS@nosubsection
+\beamer@COSMOS@nosubsectionfalse
 \DeclareOptionBeamer{no-subsection}[true]{%
-  \csname beamer@UMONS@nosubsection#1\endcsname}
+  \csname beamer@COSMOS@nosubsection#1\endcsname}
 
-\newif\ifbeamer@UMONS@nototalframenumber
-\beamer@UMONS@nototalframenumberfalse
+\newif\ifbeamer@COSMOS@nototalframenumber
+\beamer@COSMOS@nototalframenumberfalse
 
 \DeclareOptionBeamer{no-totalframenumber}[true]{%
-  \csname beamer@UMONS@nototalframenumber#1\endcsname}
+  \csname beamer@COSMOS@nototalframenumber#1\endcsname}
 
 \ProcessOptionsBeamer
 
@@ -29,7 +29,7 @@
 \setbeamercolor*{section in head/foot}{parent=palette quaternary}
 \setbeamercolor*{subsection in head/foot}{parent=palette primary}
 
-\defbeamertemplate*{footline}{UMONS theme}
+\defbeamertemplate*{footline}{COSMOS theme}
 {
   \leavevmode%
   \hbox{%
@@ -50,13 +50,13 @@
       date in head/foot}%
     \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
     \insertframenumber
-    \ifbeamer@UMONS@nototalframenumber\else ~/~\inserttotalframenumber\fi
+    \ifbeamer@COSMOS@nototalframenumber\else ~/~\inserttotalframenumber\fi
     \hspace*{2ex}
   \end{beamercolorbox}}%
   \vskip0pt%
 }
 
-\defbeamertemplate*{headline}{UMONS theme}
+\defbeamertemplate*{headline}{COSMOS theme}
 {
   \leavevmode%
   \hbox{%
@@ -67,12 +67,12 @@
         upper separation line head right}%
     \end{beamercolorbox}}%
   \vskip0pt
-  \ifbeamer@UMONS@navigation
+  \ifbeamer@COSMOS@navigation
   \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
   \end{beamercolorbox}%
   % Box for section titles and possibly subtitles (for fast navigation)
   \begin{beamercolorbox}{section in head/foot}
-    \ifbeamer@UMONS@nosubsection
+    \ifbeamer@COSMOS@nosubsection
     \insertsectionnavigationhorizontal{\paperwidth}{%
       \vspace*{2pt}}{\vspace*{2pt}}%
     \else
