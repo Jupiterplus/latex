@@ -166,22 +166,22 @@ function mine()
     {
         longestChain = getLongestValidChain();
 
-         A number that changes every time, so that you don't waste time
-         trying to calculate a valid blockHash with the same input.
+        // A number that changes every time, so that you don't waste time
+        // trying to calculate a valid blockHash with the same input.
         nonce = getNewNonce();
 
         currentTXs = getUnconfirmedTransactionsFromNetwork();
         newBlock = getNewBlock(longestChain, currentTX, nonce);
 
-         Hash function, and this is what all the *mining machines* are doing
+        // Hash function, and this is what all the *mining machines* are doing
         blockHash = sha256(newBlock)
 
         if (meetRequirements(blockHash))
         {
             broadcast(newBlock)
-             now the height of the block chain is incremented by 1
-             if the new block is accepted by other peers
-             and all the TXs in the new block are "confirmed"
+            // now the height of the block chain is incremented by 1
+            // if the new block is accepted by other peers
+            // and all the TXs in the new block are "confirmed"
         }
     }
 }
