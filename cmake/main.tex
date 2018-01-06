@@ -1,0 +1,171 @@
+%!TEX program = xelatex
+\documentclass[compress,slidestop,table,usepdftitle=false]{beamer}
+\usetheme[navigation]{COSMOS}
+%\usepackage{iwona}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[UTF8, scheme=plain]{ctex}
+\usepackage{verbatim}
+\usepackage{amsmath}
+
+\usepackage{xcolor}
+\definecolor{cmakeblue}{RGB}{84,84,216}
+\definecolor{cmakered}{RGB}{235,69,69}
+\definecolor{cmakegreen}{RGB}{0,219,0}
+\colorlet{cmaketimec}{green}
+\colorlet{buildtimec}{red}
+\colorlet{installtimec}{black}
+\colorlet{cpacktimec}{blue}
+
+\usepackage{graphicx}
+\graphicspath{{img/}}
+\DeclareGraphicsExtensions{.eps,.png,.pdf,.eps,.jpg}
+
+\usepackage{listings}
+\input{src/lstdefine-CMake}
+\lstset{
+    backgroundcolor=\color[rgb]{1,1,0.76},
+    basicstyle=\ttfamily\tiny,                  % the size of the fonts that are used for the code
+    breakatwhitespace=false,                    % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                            % sets automatic line breaking
+    captionpos=bl,                              % sets the caption-position to bottom
+    commentstyle=\color{purple} \textit,        % comment style
+    deletekeywords={...},                       % if you want to delete keywords from the given language
+    escapeinside={\%*}{*)},                     % if you want to add LaTeX within your code
+    extendedchars=true,                         % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+    frame=tRB,                                  % adds a frame around the code
+    keepspaces=true,                            % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+    keywordstyle=\color{blue}\bfseries,         % keyword style
+    identifierstyle=\color{green!70!black},     % identifier style
+    morekeywords={*,...},                       % if you want to add more keywords to the set
+    numbers=left,                               % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=2pt,                              % how far the line-numbers are from the code
+    numberstyle=\color{black},                  % the style that is used for the line-numbers
+    stepnumber=1,                               % the step between two line-numbers. If it's 1, each line will be numbered
+    rulecolor=\color{black},                    % if not set, the frame-color may be changed on line-breaks within not-black text
+    showspaces=false,                           % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+    showstringspaces=true,                      % underline spaces within strings only
+    showtabs=false,                             % show tabs within strings adding particular underscores
+    stringstyle=\color{orange},                 % string literal style
+    tabsize=2,                                  % sets default tabsize to 2 spaces
+}
+
+% Uncomment this for handout mode
+\mode<handout>{
+    \usepackage{pgfpages}
+    \pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+    \setbeamercolor{background canvas}{bg=black!5}
+}
+
+\usepackage{fancyvrb}
+\VerbatimFootnotes
+
+\usepackage{ulem}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows,shapes}
+\usetikzlibrary{patterns,snakes,automata,topaths}
+\usetikzlibrary{matrix,chains}
+\usetikzlibrary{shadows}
+\usetikzlibrary{positioning}
+\usetikzlibrary{shadings}
+\usetikzlibrary{calc}
+\tikzstyle{na} = [baseline=-.5ex]
+\tikzstyle{every picture}+=[remember picture]
+
+
+\hypersetup{
+  colorlinks=true,
+  bookmarks=true,
+  bookmarksopen=true,
+  bookmarksopenlevel=4,
+  pdfpagemode=UseOutlines,
+  pdftitle={Introduction to CMake},
+  pdfauthor={Houmin Wei},
+  pdfsubject={CMake},
+  pdfkeywords={CMake, CPack, CTest, CDash, build systems, autotools, SCons}
+}
+
+\setcounter{tocdepth}{5}% Show up to level 4 (\paragraph) in ToC (and bookmarks)
+\setcounter{secnumdepth}{5}% Show up to level 4 (\paragraph) in ToC (and bookmarks)
+
+%
+% Backslash '\'
+\def\bs{\texttt{\char '134}}
+
+\newcommand{\msgsrc}[1]{\lstinline[language=Java]!#1!}
+%\newcommand{\fname}[1]{\verb+#1+}
+\newcommand{\fname}[1]{\texttt{#1}}
+\usepackage{xspace}
+\newcommand{\cm}{CMake\xpspace}
+\newcommand{\cp}{CPack\xpspace}
+\newcommand{\ct}{CTest\xpspace}
+\newcommand{\cd}{CDash\xpspace}
+
+\AtBeginSubsection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \tableofcontents[currentsection,currentsubsection]
+   \end{frame}
+}
+
+\AtBeginSection[]
+{
+   \begin{frame}
+       \frametitle{Outline}
+       \tableofcontents[currentsection]
+   \end{frame}
+}
+
+\begin{document}
+\pgfdeclareimage[interpolate=true,height=0.6cm]{CMakeLogo}{img/CMake-logo-small}
+\pgfdeclarelayer{background2}
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background2,background,main,foreground}
+
+\title[Software Build System]{Introduction to CMake}
+\author[houmin.wei@pku.edu.cn]{\textsc{Houmin Wei}}
+\institute[]{%
+ Electronics Engineering \& Computer Science\\
+  Peking University
+  \\[2ex]
+  \includegraphics[height=4ex]{pku_red}\hspace{2em}%
+  \raisebox{-1ex}{\includegraphics[height=6ex]{pku_logo}}
+}
+\subject{Slides for CMake, CPack, CTest, CDash presentation. In english.}
+\keywords{CMake, CPack, CTest, CDash, build systems, autotools, SCons}
+
+%\begin{frame}[allowframebreaks]
+%    \frametitle{Outline}
+%    \tableofcontents
+%\end{frame}
+
+\pdfbookmark[0]{CMake tutorial}{cmaketut}
+\begin{frame}
+\titlepage
+\begin{center}
+{\tiny
+This presentation is licensed
+
+\includegraphics[width=1.2cm]{by-sa}
+
+}
+\end{center}
+\end{frame}
+
+\part{CMake}
+\addcontentsline{toc}{part}{Part I: CMake}
+\input{src/cmake}
+
+\part{CPack}
+\addcontentsline{toc}{part}{Part II: CPack}
+\input{src/cpack}
+
+\part{CTest and CDash}
+\addcontentsline{toc}{part}{Part III: CTest and CDash}
+\input{src/ctest}
+
+\end{document}
