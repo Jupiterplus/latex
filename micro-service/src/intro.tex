@@ -1,19 +1,100 @@
 \section{Introduction}
 
-\subsection{Discussion}
+%\subsection{Discussion}
 
 \begin{frame}
-    \frametitle{Why Distribution?}
-    \begin{itemize}
-        \item Economics \\
-            - Much better price/performance ratio
-        \item Reliablity \\
-            - One node fails, but the service goes on
-        \item Enhanced performance \\
-            - Tasks can be executed concurrently
-        \item Easier modular expansion \\
-            - Hardware and software resources can be easily added without replacing existing resources.
-        \item Resource Sharing \\
-            - Only one printer, share it over the network
-    \end{itemize}
+    \frametitle{What is High Availability(HA)}
+    High availability is a characteristic of a system, which aims to ensure an agreed level of operational performance, usually uptime, for a higher than normal period.
+
+    Service Level Agreements(SLA):
+    \begin{table}
+        \centering
+        \caption{service level agreements}
+        \begin{tabular}{|c|c|c|c|c|}
+            \hline
+            Avaiablity \%       & Downtime Per Year & Downtime Per Month & Downtime Per Week & Downtime Per Day \\
+            \hline
+            90 (one nine)       &     36.5 days     &     72 hours       &    16.8 hours     &    2.4 hours     \\
+            \hline
+            99 (two nine)       &     3.65 days     &     7.2 hours      &    1.68 hours     &    14.4 mins     \\
+            \hline
+            99.9 (three nine)   &     8.76 hours    &     43.8 mins      &    10.1 mins      &    1.44 mins     \\
+            \hline
+            99.99 (four nine)   &     52.56 mins    &     4.38 mins      &    1.01 mins      &    8.64 secs     \\
+            \hline
+            99.999 (five nine)  &     5.26 mins     &     25.9 secs       &    6.05 secs     &    864.3 ms      \\
+            \hline
+        \end{tabular}
+    \end{table}
+\end{frame}
+
+\begin{frame}
+    \frametitle{HA Challenges}
+
+\begin{itemize}
+    \item Master election and restructure of cluster
+    \item Protection from Split-Brain
+    \item Rejoining of a failed node to the cluster
+    \item Add new nodes - Scale up
+    \item Prevent false Failover
+    \item Protection against Race Conditions and conflicts
+    \item Automatic and Transparent Application connections failover
+    \item Standard Components and easy setup
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{What do Etcd, Consul, and ZooKeeper do?}
+
+\begin{itemize}
+    \item Service Registration \\
+        - Host, port number, and sometimes authentication credentials, protocols, versions numbers, and/or environment details.
+    \item Service Discovery \\
+        - Ability for client application to query the central registry to learn of service location.
+    \item Consistent and durable general-purpose K/V store across distributed system.
+        \begin{itemize}
+            \item Some solutions support this better than others.
+            \item Based on Paxos or some derivative (i.e. Raft) algorithm to quickly converge to a consistent state.
+            \item Centralized locking can be based on this K/V store.
+        \end{itemize}
+    \item Leader Election
+        \begin{itemize}
+            \item Not to be confused with leader election within the quorum of Etcd/Consul nodes. This is an implementation detail this is transparent to the user. What we are talking about here is leader election among the services that are registered against Etcd/Consul.
+            \item Etcd tabled their leader election module until the API stabilizes.
+        \end{itemize}
+    \item Other non-standard user cases:
+        \begin{itemize}
+            \item Distributed locking
+            \item Atomic broadcast
+            \item Sequence numbers
+            \item Pointers to data in eventually consistent stores.
+        \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{How do they behave in a distributed system?}
+
+\begin{itemize}
+    \item All of the solutions under consideration are primarily CP systems in the CAP context. That is, they favor consistency over availability. This means that all nodes have a consistent view of written data but at the expense of availability in the event that a network partitions occurs(i.e. loss of node)
+    \item Some of these solutions will support "Stale Reads"
+    \item Each solution can work with only one node. It is generally advised that we have one node. It is generally advised that we have one etcd/consul per VM/phiscal host. We do not want to have an etcd/consul per container!
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Immediate problems that we are trying to solve:}
+\begin{itemize}
+    \item Get and set dynamic configuration across a distributed system
+    \item Service Registration
+        \begin{itemize}
+            \item We need to spin up a track and have services make themselves visible via DNS.
+            \item This would be useful primarily outside of production where we would want to regularly spin up and destroy tracks.
+        \end{itemize}
+    \item Service Discovery
+\end{itemize}
+
 \end{frame}

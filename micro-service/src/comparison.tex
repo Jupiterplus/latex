@@ -1,5 +1,74 @@
 \section{Comparison}
 
 \begin{frame}
+    \framtitle{Comparison With Similar Technologies}
+\begin{itemize}
+    \item Zookeeper
+    \item Consul
+    \item Doozer
+\end{itemize}
 
 \end{frame}
+
+\begin{frame}
+    \frametitle{Similarities}
+
+\begin{itemize}
+    \item Consistent and durable general-purpose K/V store across distributed system
+    \item Based on Paxos or Raft algorithm to quickly converge to a consistent state after disconnecting one of nodes
+    \item Paxos vs. Raft
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{ZooKeeper vs etcd}
+
+\begin{itemize}
+    \item ZooKeeper is the oldest project from compared databases
+    \item Written in Java
+        \begin{itemize}
+            \item ZooKeeper is more resource hungry than any other databases
+        \end{itemize}
+    \item ZooKeeper is more complex than etcd
+        \begin{itemize}
+            \item Harder to maintain
+            \item It's harder to configure
+        \end{itemize}
+    \item ZooKeeper uses Zab
+        \item implementation of Paxos
+        \item Zab designed for primary-backup systems rather than for state machine replication
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Consul vs etcd}
+
+\begin{itemize}
+    \item Written in GO
+    \item Consul has more high level
+        \begin{itemize}
+            \item Consul implements a full service discovery system in the library.
+            \item DNS server interface, allowing to perform service lookups using the DNS protocol
+        \end{itemize}
+    \item Uses RAFT, but different implementation than etcd
+    \item etcd is older than Consul
+    \item HTTP+JSON based API, Curl-able
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Doozer vs. etcd}
+
+\begin{itemize}
+    \item Written in GO, created by Heroku before etcd
+    \item Not developed anymore
+    \item Doozer implements own Paxos algorithm
+    \item Splitted into client(doozer) and server(doozerd)
+\end{itemize}
+
+\end{itemize}
+\end{frame}
+

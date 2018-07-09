@@ -1,11 +1,47 @@
 \section{Etcd}
 
 \begin{frame}
+    \framtitle{etcd}
 etcd = /etc distributed
-
 \begin{itemize}
-
+    \item Key-Value Storage
+    \item Consistency
+    \item High Availability
+    \item Failure Tolerant
+    \item Cluster Configuration
 \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+    \framtitle{etcd}
+\begin{itemize}
+    \item Open source developed by CoreOS
+    \item Written in Go
+    \item Durable
+    \item Watchable
+    \item Exposed via HTTP
+    \item Runtime Recofigurable
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Etcd}
+
+Service registration relies on using a key TTL along with heartbeating from the service to ensure the key remains available. If a services fails to update the key's TTL, etcd will expire it. If a service becomes unavailable, clients will need to handle the connection failure and try another service instance.
 
 \end{frame}
 
+\begin{frame}
+    \frametitle{Etcd Pros and Cons}
+
+\begin{itemize}
+    \item Pros
+        \begin{itemize}
+            \item Service discovery involves listing the keys under a directory and then waiting for changes on the directory. Since the API is HTTP based, the client application keeps a long-polling connection open with the Etcd cluster.
+            \item Has been around for longer than Consul. 150\% more watched/stars.
+            \item 3 times as many contributors(i.e. more eyes) and forks on github.
+        \end{itemize}
+    \item Cons
+\end{itemize}
+\end{frame}
