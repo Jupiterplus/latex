@@ -1,0 +1,28 @@
+% Copyright 2018 Houmin Wei <houmin.wei@pku.edu.cn>
+% This file is under GNU GPL v3 or later.
+
+\mode<presentation>
+
+% Display a navigation bar
+\def\beamer@themeCOSMOS@navigation{false}
+\DeclareOptionBeamer{navigation}[true]{%
+  \def\beamer@themeCOSMOS@navigation{#1}}
+
+% Do not display "boxes" to go to subsections in the navigation bar.
+\def\beamer@themeCOSMOS@nosubsection{false}
+\DeclareOptionBeamer{no-subsection}[true]{%
+  \def\beamer@themeCOSMOS@nosubsection{#1}}
+
+% Do not display the total number of pages.
+\def\beamer@themeCOSMOS@nototalframenumber{false}
+\DeclareOptionBeamer{no-totalframenumber}[true]{%
+  \def\beamer@themeCOSMOS@nototalframenumber{#1}}
+
+\ProcessOptionsBeamer
+
+\useinnertheme{rectangles}
+\usecolortheme{COSMOS}
+\useoutertheme[navigation=\beamer@themeCOSMOS@navigation,
+               no-subsection=\beamer@themeCOSMOS@nosubsection,
+               no-totalframenumber=\beamer@themeCOSMOS@nototalframenumber]{COSMOS}
+\mode<all>
