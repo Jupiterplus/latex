@@ -10,9 +10,13 @@ This repository contains all latex about files.
 
 ## Presentation
 
-### bitcoin
+### [bitcoin](bitcoin/bitcoin.pdf)
 
-### distr
+### [ceph](ceph/ceph.pdf)
+
+### [cmake](cmake/cmake.pdf)
+
+### [distr](distr/distr.pdf)
 
 ## Thesis
 
